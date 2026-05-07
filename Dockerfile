@@ -1,12 +1,13 @@
 FROM alpine AS builder
 
-ENV TFLINT_VERSION=0.58.0
+ARG TARGETARCH
+ARG TFLINT_VERSION
 
-RUN apk add --no-cache unzip
+RUN apk add --no-cache unzip wget
 
 WORKDIR /tmp
-ADD https://github.com/terraform-linters/tflint/releases/download/v${TFLINT_VERSION}/tflint_linux_amd64.zip .
-RUN unzip tflint_linux_amd64.zip
+RUN wget -O tflint.zip "https://github.com/terraform-linters/tflint/releases/download/v${TFLINT_VERSION}/tflint_linux_${TARGETARCH}.zip" \
+    && unzip tflint.zip
 
 
 FROM alpine
