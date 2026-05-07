@@ -77,8 +77,10 @@ jobs:
           username: ${{ secrets.QUAY_USERNAME }}
           password: ${{ secrets.QUAY_TOKEN }}
 
-      - run: |
+      - env:
+          QUAY_NAMESPACE: ${{ secrets.QUAY_USERNAME }}
+        run: |
           docker buildx imagetools create \
-            --tag quay.io/${{ secrets.QUAY_USERNAME }}/${{ github.event.repository.name }}:${{ github.ref_name }} \
-            --tag quay.io/${{ secrets.QUAY_USERNAME }}/${{ github.event.repository.name }}:latest \
+            --tag quay.io/${QUAY_NAMESPACE%%+*}/${{ github.event.repository.name }}:${{ github.ref_name }} \
+            --tag quay.io/${QUAY_NAMESPACE%%+*}/${{ github.event.repository.name }}:latest \
             ghcr.io/${{ github.repository }}:${{ github.ref_name }}
