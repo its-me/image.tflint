@@ -10,7 +10,6 @@ jobs:
     name: Check and tag new release
     runs-on: ubuntu-latest
     permissions:
-      contents: write
       actions: write
     steps:
       - uses: actions/checkout@v4
@@ -22,9 +21,5 @@ jobs:
         run: |
           latest=$(gh api repos/terraform-linters/tflint/releases/latest --jq '.tag_name' | sed 's/^v//')
           if ! git ls-remote --exit-code origin "refs/tags/$latest"; then
-            git config user.name "github-actions[bot]"
-            git config user.email "github-actions[bot]@users.noreply.github.com"
-            git tag -a "$latest" -m "$latest"
-            git push origin "$latest"
-            gh workflow run release.yml --ref "$latest"
+            gh workflow run release.yml -f version="$latest"
           fi
