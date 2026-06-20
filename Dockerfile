@@ -1,4 +1,4 @@
-FROM alpine AS builder
+FROM alpine:latest AS builder
 
 ARG TARGETARCH
 ARG TFLINT_VERSION
@@ -10,7 +10,7 @@ RUN wget -O tflint.zip "https://github.com/terraform-linters/tflint/releases/dow
     && unzip tflint.zip
 
 
-FROM alpine
+FROM alpine:latest
 
 COPY --from=builder /tmp/tflint /usr/local/bin
 
