@@ -32,3 +32,7 @@ Tags follow the upstream release version numbers (e.g. `0.62.0`) plus `latest`.
 ## Automatic updates
 
 A scheduled workflow checks for new TFLint releases daily and publishes updated images to all three registries automatically.
+
+## License
+
+[MIT](LICENSE)
